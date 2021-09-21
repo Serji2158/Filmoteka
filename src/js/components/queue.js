@@ -1,14 +1,14 @@
-import newApiService from "../services/apiSevise";
-import {outputRefs, watchedBtn, queueBtn} from "../const/refs";
-import localStorageFn from "./localStorage";
-import watchedQueueTpl from "../../templates/item-media.hbs";
-import newData from "../services/prepareData";
+import newApiService from '../services/apiSevise';
+import { outputRefs, watchedBtn, queueBtn } from '../const/refs';
+import localStorageFn from './localStorage';
+import watchedQueueTpl from '../../templates/item-media.hbs';
+import newData from '../services/prepareData';
 
 const themeText = {
   enabledWatched: 'Add to Watched',
   disabledWatched: 'Remove from watched',
   enableQueue: 'Add to queue',
-  disableQueue: 'Remove to queue',
+  disableQueue: 'Remove from queue',
 };
 
 export const changeButtonWatched = (isFind, targetBtn) => {
@@ -18,7 +18,7 @@ export const changeButtonWatched = (isFind, targetBtn) => {
   } else {
     targetBtn.classList.remove('modal__btn-active');
   }
-}
+};
 
 export const changeButtonQueue = (isFind, targetBtn) => {
   targetBtn.textContent = isFind ? themeText.disableQueue : themeText.enableQueue;
@@ -27,9 +27,9 @@ export const changeButtonQueue = (isFind, targetBtn) => {
   } else {
     targetBtn.classList.remove('modal__btn-active');
   }
-}
+};
 
-export const watchedSave = (e) => {
+export const watchedSave = e => {
   const film = newApiService.openedFilm;
 
   const localWatched = localStorageFn.load('dataWatched');
@@ -52,7 +52,7 @@ export const watchedSave = (e) => {
     localWatched.push(film);
     localStorageFn.save('dataWatched', localWatched);
   }
-}
+};
 
 export function appendWatchedMarkup() {
   const localWatched = localStorageFn.load('dataWatched');
@@ -60,14 +60,14 @@ export function appendWatchedMarkup() {
   queueBtn.classList.remove('accent-color');
   if (localWatched.length === 0) {
     // outputRefs.innerHTML = `<h1 class="add-film">Oops ... there's nothing here</h1>`;
-    outputRefs.innerHTML = `<h1 class="add-film">Oops ... there's nothing here</h1>`
+    outputRefs.innerHTML = `<h1 class="add-film">Oops ... there's nothing here</h1>`;
     return;
   }
   const newLocalWatched = newData.prepareDataWQ(localWatched);
-  return outputRefs.innerHTML = watchedQueueTpl(newLocalWatched);
+  return (outputRefs.innerHTML = watchedQueueTpl(newLocalWatched));
 }
 
-export const queueSave = (e) => {
+export const queueSave = e => {
   const film = newApiService.openedFilm;
   const localQueue = localStorageFn.load('dataQueue');
   const target = e.target;
@@ -89,25 +89,14 @@ export const queueSave = (e) => {
     localQueue.push(film);
     localStorageFn.save('dataQueue', localQueue);
   }
-}
+};
 
 export function appendQueueMarkup() {
   const localQueue = localStorageFn.load('dataQueue');
   if (localQueue.length === 0) {
-    outputRefs.innerHTML = `<h1 class="add-film">Oops ... there's nothing here</h1>`
+    outputRefs.innerHTML = `<h1 class="add-film">Oops ... there's nothing here</h1>`;
     return;
   }
   const newLocalQueue = newData.prepareDataWQ(localQueue);
-  return outputRefs.innerHTML = watchedQueueTpl(newLocalQueue);
+  return (outputRefs.innerHTML = watchedQueueTpl(newLocalQueue));
 }
-
-
-
-
-
-
-
-
-
-
-
